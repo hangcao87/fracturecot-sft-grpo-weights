@@ -4,5 +4,10 @@
   "grpo_all_source_files_match_evaluation": true,
   "grpo_files": 12,
   "model_identity_only": true,
-  "training_or_inference_started": false
+  "training_or_inference_started": false,
+  "initial_sft_restore_all_files_sha256": "PASS",
+  "restore_missing_part_retry": "PASS",
+  "restore_does_not_overwrite_different_files": "PASS",
+  "known_credential_pattern_scan": "NO_FINDINGS",
+  "training_args_hub_token": "UNSET"
 }

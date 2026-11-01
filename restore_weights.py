@@ -5,6 +5,7 @@ import hashlib
 import json
 from pathlib import Path
 import tarfile
+import tempfile
 
 def sha(path):
     h = hashlib.sha256()
@@ -44,13 +45,17 @@ def main():
             dest=a.output/model/item['path']
             if item.get('assets') and not dest.exists():
                 dest.parent.mkdir(parents=True,exist_ok=True)
-                temp=dest.with_suffix(dest.suffix+'.restoring')
-                with temp.open('xb') as output:
-                    for part in item['assets']:
-                        source=a.assets/part['name']; verify(source,part)
-                        with source.open('rb') as f:
-                            for b in iter(lambda:f.read(8*1024*1024),b''): output.write(b)
-                verify(temp,item); temp.replace(dest)
+                temp=None
+                try:
+                    with tempfile.NamedTemporaryFile(mode='wb',dir=dest.parent,prefix=dest.name+'.restoring-',delete=False) as output:
+                        temp=Path(output.name)
+                        for part in item['assets']:
+                            source=a.assets/part['name']; verify(source,part)
+                            with source.open('rb') as f:
+                                for b in iter(lambda:f.read(8*1024*1024),b''): output.write(b)
+                    verify(temp,item); temp.replace(dest)
+                finally:
+                    if temp is not None and temp.exists(): temp.unlink()
             verify(dest,item)
             print('VERIFIED',model+'/'+item['path'],flush=True)
     print('All selected original files restored and SHA256 verified.')

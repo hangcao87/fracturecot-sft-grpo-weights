@@ -1,6 +1,6 @@
 # FractureCoT — SFT / GRPO 权重归档
 
-本仓库为 hangcao87 的私有模型归档。权重文件在 **Releases → weights-20261101 → Assets**，普通 `git clone` 只下载清单、恢复脚本和说明。
+本仓库为 hangcao87 的私有模型归档。权重文件在 [Releases → weights-20261101 → Assets](https://github.com/hangcao87/fracturecot-sft-grpo-weights/releases/tag/weights-20261101)，普通 `git clone` 只下载清单、恢复脚本和说明。
 
 ## 两组权重
 
@@ -9,7 +9,7 @@
 | `initial_sft` | 早期小样本 SFT 的 PEFT 语言 LoRA 适配器及配置 | 193,199,757 bytes | 配合对应 Qwen3.5-9B 基座加载 |
 | `grpo` | 作者指定且已经评测的 GRPO 合并模型 | 18,839,793,193 bytes | 可作为完整 Transformers 模型目录加载 |
 
-初始 SFT 对应 `paper_pipeline_v5_20261012/sft_full/final_adapter`，不是后续大规模 SFT。GRPO 对应服务器 `/root/Qwen3.5-9B-merged`。两组源文件均与既有评测清单核对；此次上传没有重新训练、合并或推理，也不改变既有实验结论。GRPO 标签沿用作者指定的检查点身份；文件哈希证明交付文件一致，不单独证明训练血缘或最优性。
+初始 SFT 对应 `paper_pipeline_v5_20261012/sft_full/final_adapter`。GRPO 对应服务器 `/root/Qwen3.5-9B-merged`。初始 SFT 的适配器权重及 GRPO 的全部 12 个源文件均与既有评测清单核对；其余 SFT 配套文件按原目录归档并记录哈希。此次上传没有重新训练、合并或推理，也不改变既有实验结论。GRPO 标签沿用作者指定的检查点身份；文件哈希证明交付文件一致，不单独证明训练血缘或最优性。
 
 ## 下载与恢复
 
@@ -30,7 +30,7 @@ python3 restore_weights.py --assets assets --output weights
 
 - **GRPO：** 模型类为 `Qwen3_5ForConditionalGeneration`，目录 `weights/grpo`。使用支持 Qwen3.5 的 Transformers 版本，并加载同目录的处理器与原始聊天模板。
 - **SFT：** 先加载对应的 Qwen3.5-9B 基座，再用 PEFT 从 `weights/initial_sft` 加载适配器。原始 `adapter_config.json` 保留服务器上的基座路径；在其他机器上显式提供本机基座路径，不要直接依赖该绝对路径。
-- SFT 适配器仅 173,188,512 bytes，包含 496 个语言 LoRA 张量；它不是 9B 完整模型，也不应被当作视觉 LoRA 或完整 merger 权重。
+- SFT 适配器仅 173,188,512 bytes，包含 496 个语言 LoRA 张量；保存范围为语言 LoRA，需配合对应 9B 基座使用。
 - 使用训练/评测一致的提示词、坐标合同、图像预处理、生成参数及停止符；不同推理配置不能直接用于重现原指标。
 - `training_args.bin` 是原始归档文件，不需要加载它来推理；不要对不可信的 pickle 文件调用反序列化。
 
