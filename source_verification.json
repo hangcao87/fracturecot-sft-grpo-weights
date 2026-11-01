@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "initial_sft_adapter_matches_evaluation": true,
+  "grpo_all_source_files_match_evaluation": true,
+  "grpo_files": 12,
+  "model_identity_only": true,
+  "training_or_inference_started": false
+}
