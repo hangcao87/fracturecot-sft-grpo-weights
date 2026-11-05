@@ -1,6 +1,6 @@
 # FractureCoT — SFT / GRPO 权重归档
 
-本仓库为 hangcao87 的私有模型归档。权重文件在 [Releases → weights-20261101 → Assets](https://github.com/hangcao87/fracturecot-sft-grpo-weights/releases/tag/weights-20261101)，普通 `git clone` 只下载清单、恢复脚本和说明。
+本仓库为 hangcao87 的公开模型归档，仅发布一份初始 SFT 和一份已评测 GRPO。权重文件在 [Releases → weights-20261101 → Assets](https://github.com/hangcao87/fracturecot-sft-grpo-weights/releases/tag/weights-20261101)，普通 `git clone` 只下载清单、恢复脚本和说明。
 
 ## 两组权重
 
@@ -13,7 +13,7 @@
 
 ## 下载与恢复
 
-仓库和 Release 都是私有的，下载者需要本仓库访问权限。已登录相应 GitHub 账号的 GitHub CLI 用户可执行：
+仓库和 Release 已公开。浏览器可匿名下载，无需申请访问权限。使用 GitHub CLI 的用户可执行：
 
 ```bash
 gh repo clone hangcao87/fracturecot-sft-grpo-weights
